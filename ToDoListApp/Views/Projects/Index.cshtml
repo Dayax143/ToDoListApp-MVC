@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ToDoListApp.Models.Project>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="d-flex justify-content-between">
+
+        <h4>Projects</h4>
+
+        <a asp-controller="Projects" asp-action="Create" class="btn btn-primary">Add New Project</a>
+    </div>
+</div>
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        @foreach (var project in Model)
+        {
+            <div class="col-xl-4 col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-auto">
+                            </div>
+                            <div class="col">
+                                <h5 class="py-0 my-0">
+                                    <a class="text-dark nav-link mx-0 px-0" asp-action="Details" asp-route-id="@project.Id">@project.Name</a>
+                                </h5>
+                                <small class="small bg-dark rounded text-white px-1">@project.CreatedDate.ToShortDateString()</small>
+                                <br />
+                                <span>@project.Description</span>
+                            </div>
+                        </div>
+                        <h5 class="my-3">Tasks</h5>
+                        <ul class="task-list">
+                            <li>
+                                <i class="task-icon bg-c-green"></i>
+                                <h6>Anton Knudsen<span class="float-right text-muted">14 MAY</span></h6>
+                                <p class="text-muted">Lorem ipsum is dolorem…</p>
+                            </li>
+                            <li>
+                                <i class="task-icon bg-c-green"></i>
+                                <h6>Anton Knudsen<span class="float-right text-muted">14 MAY</span></h6>
+                                <p class="text-muted">Lorem ipsum is dolorem…</p>
+                            </li>
+                            <li>
+                                <i class="task-icon bg-c-green"></i>
+                                <h6>Anton Knudsen<span class="float-right text-muted">14 MAY</span></h6>
+                                <p class="text-muted">Lorem ipsum is dolorem…</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

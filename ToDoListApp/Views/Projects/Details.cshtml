@@ -1,0 +1,91 @@
+﻿@using Microsoft.EntityFrameworkCore
+
+@model ToDoListApp.Models.Project
+@inject ToDoListApp.Data.ApplicationDbContext db
+
+@{
+    ViewData["Title"] = "Details";
+
+    var tasks = await db.Tasks.ToListAsync();
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
+    </dl>
+</div>
+
+<div class="card p-4 rounded-3 shadow mt-5">
+    <div class="row">
+        <div class="col">
+            <h4>Tasks</h4>
+        </div>
+        <div class="col text-end">
+            <a asp-controller="Tasks" asp-action="Create" asp-route-id="@Model.Id"  class="btn btn-primary"> + Add Task</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in tasks)
+                    {
+                        <tr>
+                            <td>@task.Id</td>
+                            <td>@task.Title</td>
+                            <td>@task.StartDate.ToShortTimeString()</td>
+                            <td>@task.EndDate.ToShortTimeString()</td>
+                            <td>
+                                <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id" class="btn btn-info" ?>Details</a>
+                                <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id" class="btn btn-primary" ?>Edit</a>
+                                <a asp-controller="Tasks" asp-action="Details" asp-route-id="@task.Id" class="btn btn-danger" ?>Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
